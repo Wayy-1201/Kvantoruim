@@ -327,15 +327,24 @@ svg#sticker{
 }
 
 /* ================= VIEW 4: RATING / LEADERBOARD ================= */
-.rating-view{padding:16px;}
+.rating-view{
+  padding:16px;
+}
 .rating-tabs{
-  display:flex;gap:8px;margin-bottom:16px;
+  display:flex;
+  gap:8px;
+  margin-bottom:16px;
 }
 .rating-tab{
-  flex:1;padding:10px;text-align:center;
-  background:var(--bg-card);border-radius:var(--radius-card);
+  flex:1;
+  padding:10px;
+  text-align:center;
+  background:var(--bg-card);
+  border-radius:var(--radius-card);
   border:1px solid var(--border-card);
-  cursor:pointer;font-weight:700;font-size:13px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:13px;
   transition:.15s;
 }
 .rating-tab.active-tab{
@@ -343,53 +352,106 @@ svg#sticker{
   box-shadow:0 3px 15px rgba(0,68,255,.4);
   background:linear-gradient(145deg,#2a2a2a,rgba(34,34,170,.12));
 }
-.stats-section{width:100%;}
-.stats-title{font-size:16px;font-weight:700;margin-bottom:12px;text-align:center;}
+.stats-section{
+  width:100%;
+}
+.stats-title{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:12px;
+  text-align:center;
+}
 .stats-title h2{
-  display:flex;justify-content:center;align-items:center;gap:8px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
   font-size:20px;
 }
 .stats-title .total-users{
-  font-size:13px;color:var(--text-secondary);font-weight:600;
-  display:block;margin-top:4px;
+  font-size:13px;
+  color:var(--text-secondary);
+  font-weight:600;
+  display:block;
+  margin-top:4px;
 }
 .stats-list{
-  display:flex;flex-direction:column;gap:6px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
   padding-bottom:20px;
 }
 .stats-item{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 12px;background:var(--bg-card);
-  border-radius:12px;border:1px solid var(--border-card);
-  transition:.15s;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  background:var(--bg-card);
+  border-radius:12px;
+  border: 1px solid grey;
+  transition: .15s;
 }
 .stats-item:nth-child(-n+3){
   border:1px solid rgba(255,215,0,.25);
-  background:linear-gradient(135deg,rgba(42,42,42,1),rgba(97,17,203,.08));
+  background:linear-gradient(135deg,rgb(255, 196, 0),rgba(233, 211, 12, 0.08));
 }
 .stats-rank{
-  width:28px;font-weight:900;font-size:16px;
-  color:var(--accent-blue);text-align:center;flex-shrink:0;
+  width:28px;
+  font-weight:900;
+  font-size:16px;
+  color:var(--accent-blue);
+  text-align:center;
+  flex-shrink:0;
 }
 .stats-item:nth-child(1) .stats-rank{color:var(--accent-gold);font-size:20px;}
 .stats-item:nth-child(2) .stats-rank{color:#c0c0c0;font-size:18px;}
 .stats-item:nth-child(3) .stats-rank{color:#cd7f32;font-size:18px;}
+
 .stats-avatar{
-  width:34px;height:34px;border-radius:50%;
-  background:linear-gradient(135deg,#6111cb,#2575fc);
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;font-weight:800;color:#fff;flex-shrink:0;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ffffff,#3d83fc);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:800;
+  color:#fff;
+  flex-shrink:0;
 }
-.stats-user-info{flex:1;min-width:0;}
-.stats-user{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.stats-user-level{font-size:11px;color:var(--text-secondary);font-weight:600;}
-.stats-value{text-align:right;flex-shrink:0;}
-.stats-clicks{font-weight:800;font-size:15px;color:#fff;}
-.stats-sublabel{font-size:10px;color:var(--text-secondary);font-weight:600;}
-.current-user-highlight{
-  border:1px solid rgba(0,94,255,.5) !important;
-  background:linear-gradient(135deg,rgba(0,94,255,.1),rgba(97,17,203,.1)) !important;
+.stats-user-info{
+  flex:1;
+  min-width:0;
 }
+.stats-user{
+  font-weight:700;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.stats-user-level{
+  font-size:11px;
+  color:var(--text-secondary);
+  font-weight:600;
+}
+.stats-value{
+  text-align:right;
+  flex-shrink:0;
+}
+.stats-clicks{
+  font-weight:800;
+  font-size:15px;
+  color:#fff;
+}
+.stats-sublabel{
+  font-size:10px;
+  color:var(--text-secondary);
+  font-weight:600;
+}
+
+
 
 /* User rating card */
 .user-rating-card{

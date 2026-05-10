@@ -750,7 +750,7 @@ function renderLeaderboard() {
         var valueNum = '';
         if(tg?.initDataUnsafe?.user?.photo_url){ 
         const avatarURLforratings = tg.initDataUnsafe.user.photo_url; 
-        avatarHTML = "<img src='" + avatarURLforratings + "' alt='" + player.username + "' class='stats-avatar-img'>";
+        avatarHTML = "<img style='width:34px;height:34px;border-radius:50%;' src='" + avatarURLforratings + "' alt='" + player.username + "' class='stats-avatar-img'>";
         }
         else{
             avatarHTML = "<div class='stats-avatar-placeholder'>" + initial + "</div>";
