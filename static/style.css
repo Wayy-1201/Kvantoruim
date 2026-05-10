@@ -96,7 +96,7 @@ nav{
   border-radius:var(--radius-view) var(--radius-view) 0 0;
   border-top:3px solid var(--accent-blue);
   transform:translateY(100%);
-  transition:transform 0.55s;
+  transition:transform 0.25s ease-in-out;
   color:var(--text-primary);
   z-index:10;
   overflow-y:auto;
@@ -489,11 +489,11 @@ footer{
   color:#eee;
   display:flex;
   padding:6px 4px;
+  margin: 1px 1px;
   align-items:center;
   justify-content:space-around;
   width:100%;
   border: 2px solid #1a1a1a;
-  border-bottom: none;
   border-radius: 15px;
 }
 footer a{
@@ -518,7 +518,7 @@ footer a .nav-icon{
   line-height:1;
 }
 footer a h4{
-  font-size:13px;
+  font-size:12.3px;
   font-weight:600;
   margin:0;
   white-space:nowrap;
