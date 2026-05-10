@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="static/imgs/users_api/monetka.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Кристалл-Кликер</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+
+<body>
+<div class="all" id="gameRoot">
+
+    <!-- НАВ -->
+    <div class="for_nav">
+        <nav id="nav_user">
+            <div class="user-info">
+                <div style="width: 45px; height: 45px;" class="user-avatar" id="userAvatar"></div>
+                <div class="user-name" id="userName">Загрузка...</div>
+            </div>
+            <div class="users_stars_div">
+                <div class="user-stars" id="userStars">0</div>
+                <div class="starsss_img"><i class="fa-solid fa-star"></i></div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    <div class="models-container">
+
+        <!-- ===== VIEW 1: ГЛАВНАЯ ===== -->
+        <div id="model_view_1" class="model-view active-view" data-view="1">
+            <div class="model-content">
+                <div class="stats-row">
+                    <div class="stat-block">
+                        <div style="font-size: 15px;" class="stat-label">За 1 клик</div>
+                        <div class="stat-value">
+                            <div style="width: 30px;" class="imgs"><img src="/static/imgs/users_api/monetka.svg" alt=""></div>
+                            <span style="font-size: 17px;" id="user_upgrade">1</span>
+                        </div>
+                    </div>
+                    <div class="stat-block">
+                        <div style="font-size: 15px ;" class="stat-label">Необходимо</div>
+                        <div class="stat-value">
+                            <span style="font-size: 25px;" id="required-for-level">150</span>
+                        </div>
+                    </div>
+                    <div class="stat-block">
+                        <div style="font-size: 15px;" class="stat-label">Монет в сек.</div>
+                        <div class="stat-value">
+                            <div style="width: 30px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
+                            <span style="font-size: 17px;" id="user_upgrade_sek">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="main-image-container">
+                    <div style="width: 60px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
+                    <div id="user_content_coin_lol" class="main-counter">0</div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span><span id="level">1</span>/10</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <div class="action-btn left-btn" id="ads-btn">📹</div>
+                </div>
+
+                <div class="bottom-section">
+                    <div class="tapalka">
+                        <div id="sticker_container" style="width:180px;height:180px;cursor:pointer;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 2: УЛУЧШЕНИЯ ===== -->
+        <div id="model_view_2" class="model-view" data-view="2">
+            <div class="model-content">
+                <div class="main-image-container">
+                    <div style="width: 45px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
+                    <div id="user_content_coin_lol_for_2" class="main-counter2">0</div>
+                </div>
+                <div class="donate-title"><p>Улучшай, Апгрейди, Покупай</p></div>
+
+                <div class="upgrade-categories">
+                    <div class="category-block active-category" data-category="click">
+                        <span>👆</span><span>Клик</span>
+                    </div>
+                    <div class="category-block" data-category="farm">
+                        <span>🌾</span><span>Ферма</span>
+                    </div>
+                    <div class="category-block" data-category="bonus">
+                        <span>🎁</span><span>Бонус</span>
+                    </div>
+                </div>
+
+                <!-- КЛИК -->
+                <div class="upgrade-content category-click" id="cat-click">
+                    <div class="upgrade-item" data-upg="click:power1">
+                        <div class="donate-item-left"><span class="donate-emoji">👆</span>
+                            <div class="donate-info"><span class="donate-name">Усиленный клик</span><span class="donate-desc">+1 за клик</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_1">100</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                    <div class="upgrade-item" data-upg="click:power2">
+                        <div class="donate-item-left"><span class="donate-emoji">⚡</span>
+                            <div class="donate-info"><span class="donate-name">Супер клик</span><span class="donate-desc">+3 за клик</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_2">500</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                    <div class="upgrade-item" data-upg="click:power3">
+                        <div class="donate-item-left"><span class="donate-emoji">💥</span>
+                            <div class="donate-info"><span class="donate-name">Мега клик</span><span class="donate-desc">+5 за клик</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_3">1000</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ФЕРМА -->
+                <div class="upgrade-content category-farm" id="cat-farm" style="display:none;">
+                    <div class="upgrade-item" data-upg="farm:worker">
+                        <div class="donate-item-left"><span class="donate-emoji">👨‍🌾</span>
+                            <div class="donate-info"><span class="donate-name">Рабочий</span><span class="donate-desc">+1 монета/сек</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_2_1">200</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                    <div class="upgrade-item" data-upg="farm:farmer">
+                        <div class="donate-item-left"><span class="donate-emoji">🚜</span>
+                            <div class="donate-info"><span class="donate-name">Фермер</span><span class="donate-desc">+3 монеты/сек</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_2_2">800</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                    <div class="upgrade-item" data-upg="farm:harvester">
+                        <div class="donate-item-left"><span class="donate-emoji">🌽</span>
+                            <div class="donate-info"><span class="donate-name">Комбайн</span><span class="donate-desc">+5 монет/сек</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_2_3">2000</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- БОНУС -->
+                <div class="upgrade-content category-bonus" id="cat-bonus" style="display:none;">
+                    <div class="upgrade-item" data-upg="bonus:luck">
+                        <div class="donate-item-left"><span class="donate-emoji">🍀</span>
+                            <div class="donate-info"><span class="donate-name">Удача</span><span class="donate-desc">Шанс +1.05x к бонусу</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price3_1">300</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                    <div class="upgrade-item" data-upg="bonus:crit">
+                        <div class="donate-item-left"><span class="donate-emoji">⚡</span>
+                            <div class="donate-info"><span class="donate-name">Критический удар</span><span class="donate-desc">Шанс x5 к награде</span></div>
+                        </div>
+                        <div class="upgrade-right">
+                            <div class="upgrade-price"><svg class="price-icon" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="#ffd700" stroke="#e6ac00" stroke-width="2"/><text x="18" y="23" text-anchor="middle" font-size="16" font-weight="900" fill="#b8860b">$</text></svg><span id="price_3_2">1500</span></div>
+                            <div class="upgrade-count">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 3: ДОНАТ ===== -->
+        <div id="model_view_3" class="model-view" data-view="3">
+            <div class="model-content">
+                <div class="main-image-container">
+                    <div style="width: 45px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
+                    <div id="user_content_coin_lol_for_3" class="main-counter2">0</div>
+                </div>
+                <div class="donate-title"><p>Поддержи проект и получи бонусы</p></div>
+                <div class="donate-column">
+                    <div class="donate-item" id="donate-x2">
+                        <div class="donate-item-left"><span class="donate-emoji">⚡</span>
+                            <div class="donate-info"><span class="donate-name">X2 монет навсегда</span><span class="donate-desc">Удвой доход от всех кликов</span></div>
+                        </div>
+                        <div class="donate-price">
+                            <span class="price-value">15</span><span class="price-currency">⭐</span>
+                            <div class="red_green"></div>
+                        </div>
+                    </div>
+                    <div class="donate-item" id="donate-plus100k">
+                        <div class="donate-item-left"><span class="donate-emoji">💰</span>
+                            <div class="donate-info"><span class="donate-name">+100 000 монет</span><span class="donate-desc">Мгновенное пополнение баланса</span></div>
+                        </div>
+                        <div class="donate-price">
+                            <span class="price-value">20</span><span class="price-currency">⭐</span>
+                            <div class="red_green"></div>
+                        </div>
+                    </div>
+                    <div class="donate-item" id="donate-x2sek">
+                        <div class="donate-item-left"><span class="donate-emoji">⏱️</span>
+                            <div class="donate-info"><span class="donate-name">X2 монет в секунду</span><span class="donate-desc">Удвой пассивный доход</span></div>
+                        </div>
+                        <div class="donate-price">
+                            <span class="price-value">25</span><span class="price-currency">⭐</span>
+                            <div class="red_green"></div>
+                        </div>
+                    </div>
+                    <div class="donate-item" id="donate-superclick">
+                        <div class="donate-item-left"><span class="donate-emoji">👆</span>
+                            <div class="donate-info"><span class="donate-name">Супер-клик навсегда</span><span class="donate-desc">+5 к силе клика</span></div>
+                        </div>
+                        <div class="donate-price">
+                            <span class="price-value">30</span><span class="price-currency">⭐</span>
+                            <div class="red_green"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 4: РЕЙТИНГ ===== -->
+        <div id="model_view_4" class="model-view" data-view="4">
+            <div class="model-content rating-view">
+                <div class="stats-section">
+                    <div class="stats-title">
+                        <h2>🏆 Рейтинг игроков</h2>
+                        <span class="total-users" id="totalUsers"></span>
+                    </div>
+
+                    <!-- Табы сортировки -->
+                    <div class="rating-tabs">
+                        <div class="rating-tab active-tab" data-sort="balance">💰 Монеты</div>
+                        <div class="rating-tab" data-sort="level">⭐ Уровень</div>
+                        <div class="rating-tab" data-sort="rating">❤️ Рейтинг</div>
+                    </div>
+
+                    <!-- Карточка рейтинга текущего пользователя -->
+                    <div class="user-rating-card" id="myRatingCard">
+                        <div style="font-size:13px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;">Мой рейтинг</div>
+                        <div class="rating-big" id="myRatingValue">0.0</div>
+                        <div class="rating-stars" id="myRatingStars">☆☆☆☆☆</div>
+                        <div class="rating-count" id="myRatingCount">0 оценок</div>
+                    </div>
+
+                    <!-- Список лидеров -->
+                    <div class="stats-list" id="statsList">
+                        <div class="skeleton skeleton-item"></div>
+                        <div class="skeleton skeleton-item"></div>
+                        <div class="skeleton skeleton-item"></div>
+                        <div class="skeleton skeleton-item"></div>
+                        <div class="skeleton skeleton-item"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== VIEW 5: ПРОМОКОДЫ ===== -->
+        <div id="model_view_5" class="model-view" data-view="5">
+            <div class="model-content">
+                <div class="promos-container">
+                    <div class="promo-card">
+                        <h2>Промокод на еду:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="5000000">Купить за 5M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/xgV6wg8mPlnCva3A 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на одежду:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="10000000">Купить за 10M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/F3G7qPk-zTwD-qMI 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ФУТЕР -->
+    <div class="for_footer">
+        <footer id="footer">
+            <a href="#" class="active" data-view="1">
+                <span class="nav-icon"><img src="static/imgs/for_fyter/dollar.png" alt=""></span>
+                <h4>Главная</h4>
+            </a>
+            <a href="#" data-view="2">
+                <span class="nav-icon"><img src="static/imgs/for_fyter/pickaxe.png" alt=""></span>
+                <h4>Улучшения</h4>
+            </a>
+            <a href="#" data-view="3">
+                <span class="nav-icon"><img src="static/imgs/for_fyter/money.png" alt=""></span>
+                <h4>Донат</h4>
+            </a>
+            <a href="#" data-view="4">
+                <span class="nav-icon"><img src="static/imgs/for_fyter/top_lider.png" alt=""></span>
+                <h4>Рейтинг</h4>
+            </a>
+            <a href="#" data-view="5">
+                <span class="nav-icon"><img src="static/imgs/for_fyter/Gift.png" alt=""></span>
+                <h4>Промокоды</h4>
+            </a>
+        </footer>
+    </div>
+</div>
+
+<!-- ===== МОДАЛКА ОЦЕНКИ ===== -->
+<div class="rate-modal-overlay" id="rateModalOverlay">
+    <div class="rate-modal">
+        <h3 id="rateModalTitle">Оценить игрока</h3>
+        <div class="star-select" id="starSelect">
+            <span data-star="1">⭐</span>
+            <span data-star="2">⭐</span>
+            <span data-star="3">⭐</span>
+            <span data-star="4">⭐</span>
+            <span data-star="5">⭐</span>
+        </div>
+        <textarea id="rateComment" placeholder="Комментарий (необязательно)"></textarea>
+        <div class="rate-modal-btns">
+            <button class="cancel-btn" id="rateCancelBtn">Отмена</button>
+            <button class="submit-btn" id="rateSubmitBtn">Отправить</button>
+        </div>
+    </div>
+</div>
+<!-- Добавьте после других скриптов в <head> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="/static/main.js"></script>
+</body>
+</html>
