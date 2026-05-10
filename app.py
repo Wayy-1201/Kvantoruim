@@ -13,8 +13,8 @@ CORS(app)
 
 DATABASE = 'crystal_clicker.db'
 LEADERBOARD_LIMIT = 100
-if not os.path.exists(DATABASE):
-    DB.init_db()
+
+DB.init_db()
 
 @app.route('/')
 def index():

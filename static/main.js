@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(r => r.json())
             .then(data => {
                 if (data.ok && !data.is_new && data.user) {
-                    // Загружаем данные с сервера
+
                     userData.balance = data.user.balance;
                     userData.stars = data.user.stars;
                     userData.level = data.user.level;
@@ -74,7 +74,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     userData.progress = data.user.progress;
                     userData.totalClicks = data.user.total_clicks;
                     userData.totalEarned = data.user.total_earned;
-                }
+                                
+                    // ================= CLICK UPGRADES =================
+                    userData.clickUpgrades.power1.count = data.user.click_upgrades.power1 || 0;
+                    userData.clickUpgrades.power2.count = data.user.click_upgrades.power2 || 0;
+                    userData.clickUpgrades.power3.count = data.user.click_upgrades.power3 || 0;
+                                
+                    // ================= FARM UPGRADES =================
+                    userData.farmUpgrades.worker.count = data.user.farm_upgrades.worker || 0;
+                    userData.farmUpgrades.farmer.count = data.user.farm_upgrades.farmer || 0;
+                    userData.farmUpgrades.harvester.count = data.user.farm_upgrades.harvester || 0;
+                                
+                    // ================= BONUS UPGRADES =================
+                    userData.bonusUpgrades.luck.count = data.user.bonus_upgrades.luck || 0;
+                    userData.bonusUpgrades.crit.count = data.user.bonus_upgrades.crit || 0;
+                                
+                    // ================= DONATE =================
+                    userData.donors = data.user.donors || {
+                        x2: false,
+                        x2sek: false,
+                        superclick: false
+                    };
+}
                 updateUI();
             })
             .catch(() => {
