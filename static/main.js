@@ -345,8 +345,8 @@ function createFloatText(x, y, value) {
     const f = document.createElement('div');
     f.textContent = '+' + format(value);
     f.style.cssText =
-        'position:fixed;left:' + x + 'px;top:' + y + 'px;color:#ffd700;font-size:26px;' +
-        'font-weight:900;text-shadow:0 0 15px #ff9900,2px 2px 2px #000;pointer-events:none;' +
+        'position:fixed;left:' + x + 'px;top:' + y + 'px;color:#fffff;font-size:26px;' +
+        'font-weight:900;text-shadow:0 0 15px #4082ce,2px 2px 2px #4672ec;pointer-events:none;' +
         'z-index:1000;animation:floatUp 1s ease-out forwards;font-family:var(--font);';
     document.body.appendChild(f);
     setTimeout(() => f.remove(), 1000);
@@ -551,21 +551,21 @@ function scheduleNextBubble() {
 }
 function createBubble() {
     if (bubbleActive) return;
-    var container = document.getElementById('gameRoot');
-    var rect = container.getBoundingClientRect();
+    let container = document.getElementById('gameRoot');
+    let rect = container.getBoundingClientRect();
     if (rect.width === 0) return;
 
-    var bubble = document.createElement('div');
+    let bubble = document.createElement('div');
     bubble.className = 'bubble';
-    var size = Math.floor(Math.random() * 35) + 30;
+    let size = 50 + Math.random() * 1.0004
     bubble.style.width = size + 'px';
     bubble.style.height = size + 'px';
     bubble.style.left = Math.floor(Math.random() * (rect.width - size)) + 'px';
     bubble.style.bottom = '0px';
     bubble.style.position = 'absolute';
-    var dur = (Math.random() * 2 + 2).toFixed(1);
+    let dur = (Math.random() * 1 + 2).toFixed(1);
     bubble.style.animationDuration = dur + 's';
-    var reward = Math.floor(Math.random() * 500) + 20;
+    let reward = Math.floor(Math.random() * 500) + 20;
     bubble.setAttribute('data-reward', reward);
     bubble.textContent = '+' + reward;
     bubble.onclick = function(e) {
