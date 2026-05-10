@@ -40,9 +40,7 @@ let currentStickerLevel = userData.level;
 // ================= ИНИЦИАЛИЗАЦИЯ =================
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById("sticker_container");
-    
-    // === ПОЛУЧАЕМ ДАННЫЕ ИЗ TELEGRAM ===
-    const tg = window.Telegram?.WebApp;
+
     
     if (tg) {
         tg.ready();
@@ -200,14 +198,14 @@ function updateUI() {
     el('userStars').textContent = userData.stars;
     el('userName').textContent = userData.username;
 
-    // Аватар
-    const avatarEl = el('userAvatar');
-    if(tg?.initDataUnsafe?.user?.photo_url){
-        const avatarURL = tg.initDataUnsafe.user.photo_url;
-        avatarEl.src = avatarURL;
+    // АВАТАР //
+    const avatarEl = el('userAvatar'); //получаем img
+    if(tg?.initDataUnsafe?.user?.photo_url){ // если есть фото в телеге, то ставим его - знак вопроса - обрабатывает ошибки, если фото нет или не удалось загрузить
+        const avatarURL = tg.initDataUnsafe.user.photo_url; //выносим ссылку
+        avatarEl.src = avatarURL; //непосредственно ставим ее
     }
     else{
-        avatarEl.src = "/static/imgs/users_api/monetka.svg";
+        avatarEl.src = "/static/imgs/users_api/monetka.svg"; // иначе - дефолт
     }
 
     // Сила клика с учетом X2
