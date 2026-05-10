@@ -202,7 +202,11 @@ function updateUI() {
 
     // Аватар
     const avatarEl = el('userAvatar');
-    avatarEl.textContent = userData.username.charAt(0).toUpperCase();
+    tg.getUserAvatar(userData.telegram_id).then(avatarURL => {
+        if (avatarURL) {
+            avatarEl.src = avatarURL;
+        }
+    });
 
     // Сила клика с учетом X2
     let displayClick = userData.clickPower;
