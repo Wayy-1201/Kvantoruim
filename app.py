@@ -10,6 +10,7 @@ import othersfuncioons as FYNC
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
+
 DATABASE = 'crystal_clicker.db'
 LEADERBOARD_LIMIT = 100
 if not os.path.exists(DATABASE):
