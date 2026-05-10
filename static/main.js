@@ -1,5 +1,5 @@
 const API_BASE = '/api';
-
+const tg = window.Telegram?.WebApp;
 // ================= ДАННЫЕ ПОЛЬЗОВАТЕЛЯ =================
 const userData = {
     telegram_id: 0,
@@ -193,7 +193,7 @@ function showNotification(text, isGood) {
 // ================= ОБНОВЛЕНИЕ UI =================
 function updateUI() {
     const el = (id) => document.getElementById(id);
-
+    const tg = window.Telegram?.WebApp;
     el('user_content_coin_lol').textContent = format(userData.balance);
     el('user_content_coin_lol_for_2').textContent = format(userData.balance);
     el('user_content_coin_lol_for_3').textContent = format(userData.balance);
@@ -203,7 +203,7 @@ function updateUI() {
     // Аватар
     const avatarEl = el('userAvatar');
     if(tg?.initDataUnsafe?.user?.photo_url){
-        avatarURL = tg.initDataUnsafe.user.photo_url;
+        const avatarURL = tg.initDataUnsafe.user.photo_url;
         avatarEl.src = avatarURL;
     }
     else{
