@@ -12,7 +12,8 @@ CORS(app)
 
 DATABASE = 'crystal_clicker.db'
 LEADERBOARD_LIMIT = 100
-
+if not os.path.exists(DATABASE):
+    DB.init_db()
 
 @app.route('/')
 def index():
@@ -235,8 +236,6 @@ def get_ratings(telegram_id):
 
 
 if __name__ == '__main__':
-    if not os.path.exists(DATABASE):
-        DB.init_db()
     app.run(host='0.0.0.0', port=5000, debug=True)
 
 
