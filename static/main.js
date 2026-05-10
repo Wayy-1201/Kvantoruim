@@ -748,7 +748,13 @@ function renderLeaderboard() {
         var initial = player.username.charAt(0).toUpperCase();
         var valueLabel = '';
         var valueNum = '';
-
+        if(tg?.initDataUnsafe?.user?.photo_url){ 
+        const avatarURLforratings = tg.initDataUnsafe.user.photo_url; 
+        avatarHTML = "<img src='" + avatarURLforratings + "' alt='" + player.username + "' class='stats-avatar-img'>";
+        }
+        else{
+            avatarHTML = "<div class='stats-avatar-placeholder'>" + initial + "</div>";
+        }
         if (currentSort === 'balance') {
             valueNum = format(player.balance);
             valueLabel = 'монет';
@@ -760,9 +766,11 @@ function renderLeaderboard() {
             valueLabel = player.rating_count + ' оценок';
         }
 
+
+
         html += '<div class="stats-item' + (isMe ? ' current-user-highlight' : '') + '" data-tid="' + player.telegram_id + '" data-name="' + player.username + '">';
         html += '<div class="stats-rank">' + player.rank + '</div>';
-        html += '<div class="stats-avatar">' + initial + '</div>';
+        html += '<div class="stats-avatar">' + avatarHTML + '</div>';
         html += '<div class="stats-user-info"><div class="stats-user">' + player.username + (isMe ? ' (Вы)' : '') + '</div>';
         html += '<div class="stats-user-level">Уровень ' + player.level + '</div></div>';
         html += '<div class="stats-value"><div class="stats-clicks">' + valueNum + '</div>';
