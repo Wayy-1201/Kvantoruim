@@ -14,7 +14,7 @@
   --accent-purple:#9e00f3;
   --accent-gold:#ffd700;
   --text-primary:#fff;
-  --text-secondary:#888;
+  --text-secondary:#fff;
   --success:#4CAF50;
   --error:#f44336;
   --gradient-main:linear-gradient(to right,#0084ff,#0084ff);
@@ -392,8 +392,7 @@ svg#sticker{
   transition: .15s;
 }
 .stats-item:nth-child(-n+3){
-  border:1px solid rgba(255,215,0,.25);
-  background:linear-gradient(135deg,rgb(255, 196, 0),rgba(233, 211, 12, 0.08));
+  background:linear-gradient(135deg,rgb(255, 196, 0),rgb(201, 154, 0));
 }
 .stats-rank{
   width:28px;
@@ -403,7 +402,7 @@ svg#sticker{
   text-align:center;
   flex-shrink:0;
 }
-.stats-item:nth-child(1) .stats-rank{color:var(--accent-gold);font-size:20px;}
+.stats-item:nth-child(1) .stats-rank{color:var(--text-secondary);font-size:20px;}
 .stats-item:nth-child(2) .stats-rank{color:#c0c0c0;font-size:18px;}
 .stats-item:nth-child(3) .stats-rank{color:#cd7f32;font-size:18px;}
 
@@ -518,6 +517,8 @@ svg#sticker{
 .rate-modal-btns .cancel-btn{background:var(--bg-card);color:#fff;}
 .rate-modal-btns .submit-btn{background:var(--gradient-main);color:#fff;}
 .rate-modal-btns button:active{transform:scale(.96);}
+
+
 
 /* ================= VIEW 5: PROMOS ================= */
 .promos-container{
