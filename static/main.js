@@ -207,7 +207,7 @@ function updateUI() {
         avatarEl.src = avatarURL;
     }
     else{
-        avatarEl.src = "static/imgs/users_api/monetka.svg";
+        avatarEl.src = "/static/imgs/users_api/monetka.svg";
     }
 
     // Сила клика с учетом X2
