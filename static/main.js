@@ -202,11 +202,13 @@ function updateUI() {
 
     // Аватар
     const avatarEl = el('userAvatar');
-    tg.getUserAvatar(userData.telegram_id).then(avatarURL => {
-        if (avatarURL) {
-            avatarEl.src = avatarURL;
-        }
-    });
+    if(tg?.initDataUnsafe?.user?.photo_url){
+        avatarURL = tg.initDataUnsafe.user.photo_url;
+        avatarEl.src = avatarURL;
+    }
+    else{
+        avatarEl.src = "static/imgs/users_api/monetka.svg";
+    }
 
     // Сила клика с учетом X2
     let displayClick = userData.clickPower;
