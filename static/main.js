@@ -473,7 +473,8 @@ function initAds() {
     if (adsBtn) {
         adsBtn.addEventListener('click', function() {showAdModal();});
     }
-    else{adsBtn2.addEventListener('click' , function() {showAdModal2();});
+    if (adsBtn2) {
+        adsBtn2.addEventListener('click' , function() {showAdModal2();});
     }
 }
 
@@ -481,7 +482,7 @@ function showAdModal() {
     const overlay = document.getElementById('adOverlay');
     const btn = document.getElementById('adBtn');
 
-    function showAdModal() {overlay.classList.add('active');}
+    overlay.classList.add('active');
     function hideAdModal() {overlay.classList.remove('active');}
 
     btn.addEventListener('click', function () {
@@ -500,7 +501,23 @@ function showAdModal() {
 }
 
 function showAdModal2(){
+    const overlay = document.getElementById('adOverlay2');
+    const btn = document.getElementById('adBtn2');
+    overlay.classList.add("active");
 
+    function hideAdModal2() {overlay.classList.remove('active');}
+    btn.addEventListener('click', function () {
+        userData.stars += 2;
+        updateUI();
+        syncToServer();
+        showNotification('+2 звезды!', true);
+        hideAdModal2();
+    });
+    overlay.addEventListener('click' , function(e){
+        if (e.target === overlay) {
+            hideAdModal2();
+        }
+    })
 }
 
 
