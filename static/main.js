@@ -264,6 +264,12 @@ function updateUI() {
     document.querySelectorAll('.category-farm .upgrade-count')[2].textContent = userData.farmUpgrades.harvester.count;
     document.querySelectorAll('.category-bonus .upgrade-count')[0].textContent = userData.bonusUpgrades.luck.count;
     document.querySelectorAll('.category-bonus .upgrade-count')[1].textContent = userData.bonusUpgrades.crit.count;
+
+
+    // Мой рейтинг
+    el('myRatingValue').textContent = userData.myRating.avg.toFixed(1);
+    el('myRatingStars').textContent = renderStars(userData.myRating.avg);
+    el('myRatingCount').textContent = userData.myRating.count + ' оценок';
 }
 
 function renderStars(avg) {
