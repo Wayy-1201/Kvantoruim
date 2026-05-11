@@ -468,44 +468,45 @@ function initUpgradeHandlers() {
 
 // ================= РЕКЛАМА =================
 function initAds() {
-    var adsBtn = document.getElementById('ads-btn');
+    const adsBtn = document.getElementById('ads-btn');
+    const adsBtn2 = document.getElementById("ads-btn2");
     if (adsBtn) {
-        adsBtn.addEventListener('click', function() {
-            showAdModal();
-        });
+        adsBtn.addEventListener('click', function() {showAdModal();});
+    }
+    else{adsBtn2.addEventListener('click' , function() {showAdModal2();});
     }
 }
 
 function showAdModal() {
-    var overlay = document.createElement('div');
-    overlay.style.cssText =
-        'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);' +
-        'display:flex;justify-content:center;align-items:center;z-index:10000;';
-    var modal = document.createElement('div');
-    modal.style.cssText =
-        'background:var(--bg-panel);padding:28px;border-radius:20px;text-align:center;' +
-        'max-width:300px;width:90%;border:1px solid var(--border-card);';
-    var text = document.createElement('p');
-    text.textContent = 'Здесь могла бы быть ваша реклама';
-    text.style.cssText = 'font-size:16px;margin-bottom:18px;color:#ccc;font-weight:600;';
-    var btn = document.createElement('button');
-    btn.textContent = 'Получить ⭐';
-    btn.style.cssText =
-        'background:var(--gradient-main);color:#fff;border:none;padding:10px 28px;' +
-        'border-radius:30px;font-size:15px;cursor:pointer;font-weight:700;font-family:var(--font);';
-    btn.addEventListener('click', function() {
-        userData.stars += 1;
-        updateUI();
-        syncToServer();
-        showNotification('+1 звезда!', true);
-        overlay.remove();
+    const overlay = document.getElementById('adOverlay');
+    const btn = document.getElementById('adBtn');
+
+    function showAdModal() {overlay.classList.add('active');}
+    function hideAdModal() {overlay.classList.remove('active');}
+
+    btn.addEventListener('click', function () {
+    userData.stars += 1;
+    updateUI();
+    syncToServer();
+    showNotification('+1 звезда!', true);
+    hideAdModal();
     });
-    modal.appendChild(text);
-    modal.appendChild(btn);
-    overlay.appendChild(modal);
-    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
-    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) {
+        hideAdModal();
+    }
+    });
 }
+
+function showAdModal2(){
+
+}
+
+
+
+
+
 
 // ================= ПРОМОКОДЫ =================
 function initPromos() {
