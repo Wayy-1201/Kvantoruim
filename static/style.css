@@ -118,8 +118,6 @@ nav{
 }
 
 
-
-
 .ad-overlay {
     position: fixed;
     top: 0;
@@ -127,14 +125,19 @@ nav{
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,.8);
-    display: none; 
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease,
+                visibility 0.35s ease;
 }
 
 .ad-overlay.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 .ad-modal {
@@ -145,15 +148,16 @@ nav{
     max-width: 300px;
     width: 90%;
     border: 1px solid var(--border-card);
+    transform: scale(0.7) translateY(30px);
+    opacity: 0;
+    transition: transform 0.35s ease,
+                opacity 0.35s ease;
 }
 
-.ad-text {
-    font-size: 16px;
-    margin-bottom: 18px;
-    color: #ccc;
-    font-weight: 600;
+.ad-overlay.active .ad-modal {
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
-
 .ad-btn {
     background: var(--gradient-main);
     color: #fff;
@@ -164,7 +168,19 @@ nav{
     cursor: pointer;
     font-weight: 700;
     font-family: var(--font);
+
+    transition: transform 0.2s ease,
+                opacity 0.2s ease;
 }
+
+.ad-btn:hover {
+    transform: scale(1.05);
+}
+
+.ad-btn:active {
+    transform: scale(0.96);
+}
+
 
 
 
@@ -175,14 +191,19 @@ nav{
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,.8);
-    display: none; 
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease,
+                visibility 0.35s ease;
 }
 
 .ad-overlay2.active {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
 }
 
 .ad-modal2 {
@@ -193,13 +214,15 @@ nav{
     max-width: 300px;
     width: 90%;
     border: 1px solid var(--border-card);
+    transform: scale(0.7) translateY(30px);
+    opacity: 0;
+    transition: transform 0.35s ease,
+                opacity 0.35s ease;
 }
 
-.ad-text2 {
-    font-size: 16px;
-    margin-bottom: 18px;
-    color: #ccc;
-    font-weight: 600;
+.ad-overlay2.active .ad-modal2 {
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
 
 .ad-btn2 {
@@ -212,9 +235,41 @@ nav{
     cursor: pointer;
     font-weight: 700;
     font-family: var(--font);
+
+    transition: transform 0.2s ease,
+                opacity 0.2s ease;
+}
+
+.ad-btn2:hover {
+    transform: scale(1.05);
+}
+
+.ad-btn2:active {
+    transform: scale(0.96);
 }
 
 
+
+
+.img_for_u {
+    position: absolute;
+    bottom: -10px;
+    right: 10px;
+    width: 225px;
+    animation: floatGirl 3s ease-in-out infinite;
+}
+
+@keyframes floatGirl {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
 
 
 
@@ -311,6 +366,7 @@ nav{
   transition: .3s ease-in-out;
   pointer-events:auto;
   font-size:24px;
+  border: 1px solid black ;
 
 }
 .action-btn:active{
@@ -629,10 +685,20 @@ svg#sticker{
 
 /* ================= VIEW 5: PROMOS ================= */
 .promos-container{
-  display:flex;flex-direction:column;gap:10px;
-  max-width:500px;margin:0 auto;width:100%;padding:10px 0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-width:500px;
+  margin:0 auto;
+  width:100%;
+  padding:10px 0;
 }
-.promo-card{background:#2a2a3a;border-radius:var(--radius-card);padding:14px;}
+.promo-card{
+  background:#2a2a3a;
+  border-radius:var(--radius-card);
+  padding:14px;
+}
+
 .promo-card h2{font-size:16px;margin-bottom:8px;font-weight:800;}
 .promo-content{display:flex;align-items:flex-end;gap:10px;}
 .promo-info{flex:0 0 60%;padding-bottom:8px;}

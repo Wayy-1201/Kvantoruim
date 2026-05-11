@@ -437,6 +437,10 @@ function initNavigation() {
 
             // Обновить лидерборд при открытии вкладки рейтинга
             if (view === '4') loadLeaderboard();
+            if (view === '2') {
+                const bbb = document.querySelector(".model_view2");
+                bbb.style.overflowY = "hidden";
+            }
         });
     });
 }
@@ -466,10 +470,12 @@ function initUpgradeHandlers() {
     });
 }
 
-// ================= РЕКЛАМА =================
+// ================= КВАНТОРИУМ + КАК РАБОТАТЬ В ПРИЛОЖЕНИИ ИНСТРУКЦИЯ =================
+
+//ИНИЦИАЛИЗАЦИЯ КНОПОК
 function initAds() {
-    const adsBtn = document.getElementById('ads-btn');
-    const adsBtn2 = document.getElementById("ads-btn2");
+    const adsBtn = document.getElementById('ads-btn'); //ВИДЕО
+    const adsBtn2 = document.getElementById("ads-btn2"); //КАК ИГРАТЬ
     if (adsBtn) {
         adsBtn.addEventListener('click', function() {showAdModal();});
     }
@@ -477,6 +483,7 @@ function initAds() {
         adsBtn2.addEventListener('click' , function() {showAdModal2();});
     }
 }
+
 
 function showAdModal() {
     const overlay = document.getElementById('adOverlay');
@@ -486,10 +493,8 @@ function showAdModal() {
     function hideAdModal() {overlay.classList.remove('active');}
 
     btn.addEventListener('click', function () {
-    userData.stars += 1;
     updateUI();
     syncToServer();
-    showNotification('+1 звезда!', true);
     hideAdModal();
     });
 
@@ -507,10 +512,8 @@ function showAdModal2(){
 
     function hideAdModal2() {overlay.classList.remove('active');}
     btn.addEventListener('click', function () {
-        userData.stars += 2;
         updateUI();
         syncToServer();
-        showNotification('+2 звезды!', true);
         hideAdModal2();
     });
     overlay.addEventListener('click' , function(e){
