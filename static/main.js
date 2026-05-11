@@ -165,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initCategorySwitching();
     initUpgradeHandlers();
-    initDonateShop();
     initAds();
     initPromos();
     initRatingTabs();
@@ -394,34 +393,6 @@ function buyUpgrade(type, key) {
     syncToServer();
 }
 
-// ================= ДОНАТ ПОКУПКИ =================
-function initDonateShop() {
-    const handlers = {
-        'donate-x2': { stars: 15, key: 'x2', msg: 'X2 монет навсегда!' },
-        'donate-plus100k': { stars: 20, key: null, msg: '+100 000 монет!' },
-        'donate-x2sek': { stars: 25, key: 'x2sek', msg: 'X2 монет в секунду!' },
-        'donate-superclick': { stars: 30, key: 'superclick', msg: 'Супер-клик +5!' }
-    };
-
-    Object.entries(handlers).forEach(function(entry) {
-        var id = entry[0];
-        var cfg = entry[1];
-        var el = document.getElementById(id);
-        if (!el) return;
-        el.addEventListener('click', function() {
-            if (cfg.key && userData.donors[cfg.key]) { showNotification('Уже куплено!', false); return; }
-            if (userData.stars < cfg.stars) { showNotification('Нужно ' + cfg.stars + ' ⭐!', false); return; }
-            userData.stars -= cfg.stars;
-            if (cfg.key) userData.donors[cfg.key] = true;
-            if (id === 'donate-plus100k') userData.balance += 100000;
-            if (id === 'donate-superclick') userData.clickPower += 5;
-            updateUI();
-            syncToServer();
-            showNotification(cfg.msg, true);
-        });
-    });
-}
-
 // ================= НАВИГАЦИЯ =================
 function initNavigation() {
     var links = document.querySelectorAll('footer a');
@@ -440,6 +411,10 @@ function initNavigation() {
             if (view === '2') {
                 const bbb = document.querySelector(".model_view2");
                 bbb.style.overflowY = "hidden";
+            }
+            if (view === '1') { 
+                const sss = document.querySelector(".model_view");
+                sss.style.overflowY ="hidden";
             }
         });
     });
