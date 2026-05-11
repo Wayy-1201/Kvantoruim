@@ -773,13 +773,28 @@ footer a.active::before{
 }
 
 /* ================= NOTIFICATION ================= */
-.game-notification{
-  position:fixed;top:50px;left:50%;transform:translateX(-50%);
-  padding:10px 22px;border-radius:var(--radius-pill);
-  font-weight:700;font-size:14px;z-index:9000;
-  animation:notifFade 2s forwards;pointer-events:none;
-  font-family:var(--font);white-space:nowrap;
+.notification{
+    position: fixed;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0 , 0 , 0, 0.2);
+    pointer-events: none;
+    transition: all 0.7s ease-in-out;
+    z-index: 999;
+    opacity: 0;
+    transform: translateX(-20px);
+    cursor: pointer;
 }
+.notification.show{
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+
+
+
 @keyframes notifFade{
   0%{opacity:1;transform:translateX(-50%) translateY(0);}
   70%{opacity:1;}

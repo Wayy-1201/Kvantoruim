@@ -199,13 +199,13 @@ function format(n) {
 
 // ================= УВЕДОМЛЕНИЯ =================
 function showNotification(text, isGood) {
-    const n = document.createElement('div');
-    n.className = 'game-notification';
+    const n = document.getElementById("notif");
     n.textContent = text;
     n.style.background = isGood ? 'var(--success)' : 'var(--error)';
-    n.style.color = '#fff';
-    document.body.appendChild(n);
-    setTimeout(() => n.remove(), 2000);
+    n.className = 'notification show';
+    setTimeout(() => {
+        n.className = 'notification';
+    }, 2000);
 }
 
 // ================= ОБНОВЛЕНИЕ UI =================
@@ -265,8 +265,6 @@ function updateUI() {
     document.querySelectorAll('.category-bonus .upgrade-count')[0].textContent = userData.bonusUpgrades.luck.count;
     document.querySelectorAll('.category-bonus .upgrade-count')[1].textContent = userData.bonusUpgrades.crit.count;
 
-    // Донат статус
-    updateDonateStatus();
 
     // Мой рейтинг
     el('myRatingValue').textContent = userData.myRating.avg.toFixed(1);
@@ -282,21 +280,7 @@ function renderStars(avg) {
     return s;
 }
 
-function updateDonateStatus() {
-    const items = [
-        { id: 'donate-x2', key: 'x2' },
-        { id: 'donate-plus100k', key: null },
-        { id: 'donate-x2sek', key: 'x2sek' },
-        { id: 'donate-superclick', key: 'superclick' }
-    ];
-    items.forEach(item => {
-        const el = document.getElementById(item.id);
-        const dot = el ? el.querySelector('.red_green') : null;
-        if (dot) {
-            dot.style.backgroundColor = (item.key && userData.donors[item.key]) ? 'var(--success)' : 'var(--error)';
-        }
-    });
-}
+
 
 // ================= КЛИК =================
 function handleClick(e) {
