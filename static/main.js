@@ -413,8 +413,8 @@ function initNavigation() {
                 bbb.style.overflowY = "hidden";
             }
             if (view === '1') { 
-                const sss = document.querySelector(".model_view");
-                sss.style.overflowY ="hidden";
+                const sss = document.getElementById("model_view_1");
+                sss.style.overflowY = "hidden";
             }
         });
     });
