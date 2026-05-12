@@ -11,13 +11,21 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
 DATABASE = 'crystal_clicker.db'
-LEADERBOARD_LIMIT = 100
-if not os.path.exists(DATABASE):
-    DB.init_db()
+LEADERBOARD_LIMIT = 50
+DB.init_db()
+
+
+
+
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
+
 
 
 @app.route('/api/register', methods=['POST'])
@@ -51,6 +59,10 @@ def register():
     user_dict = FYNC.user_to_dict(user)
     user_dict['rating'] = {'avg': 0, 'count': 0}
     return jsonify({'ok': True, 'user': user_dict, 'is_new': True})
+
+
+
+
 
 @app.route('/api/sync', methods=['POST'])
 def sync():
@@ -94,23 +106,10 @@ def sync():
     user = db.execute('SELECT * FROM users WHERE telegram_id = ?', (telegram_id,)).fetchone()
     return jsonify({'ok': True, 'user': FYNC.user_to_dict(user)})
 
-@app.route('/api/user/<int:telegram_id>', methods=['GET'])
-def get_user(telegram_id):
-    if not FYNC.validate_telegram_id(telegram_id):
-        return jsonify({'ok': False, 'error': 'Неверный telegram_id'}), 400
-    db = DB.get_db()
-    user = db.execute('SELECT * FROM users WHERE telegram_id = ?', (telegram_id,)).fetchone()
-    if not user:
-        return jsonify({'ok': False, 'error': 'Пользователь не найден'}), 404
-    rating = db.execute('SELECT AVG(score) as avg_score, COUNT(*) as count FROM ratings WHERE to_user = ?', (telegram_id,)).fetchone()
-    return jsonify({
-        'ok': True,
-        'user': FYNC.user_to_dict(user),
-        'rating': {
-            'avg': round(rating['avg_score'], 1) if rating['avg_score'] else 0,
-            'count': rating['count']
-        }
-    })
+
+
+
+
 
 @app.route('/api/leaderboard', methods=['GET'])
 def leaderboard():
@@ -161,6 +160,11 @@ def leaderboard():
     
     return jsonify({'ok': True, 'leaderboard': result, 'total_users': total})
 
+
+
+
+
+
 @app.route('/api/rate', methods=['POST'])
 def rate_user():
     data = request.get_json()
@@ -201,36 +205,6 @@ def rate_user():
         }
     })
 
-@app.route('/api/ratings/<int:telegram_id>', methods=['GET'])
-def get_ratings(telegram_id):
-    if not FYNC.validate_telegram_id(telegram_id):
-        return jsonify({'ok': False, 'error': 'Неверный telegram_id'}), 400
-    limit = min(int(request.args.get('limit', 20)), 50)
-    offset = max(int(request.args.get('offset', 0)), 0)
-    db = DB.get_db()
-    
-    avg = db.execute('SELECT AVG(score) as avg_score, COUNT(*) as count FROM ratings WHERE to_user = ?', (telegram_id,)).fetchone()
-    ratings = db.execute('''
-        SELECT r.from_user, u.username as from_username, r.score, r.comment, r.created_at
-        FROM ratings r
-        JOIN users u ON u.telegram_id = r.from_user
-        WHERE r.to_user = ?
-        ORDER BY r.created_at DESC
-        LIMIT ? OFFSET ?
-    ''', (telegram_id, limit, offset)).fetchall()
-    
-    return jsonify({
-        'ok': True,
-        'avg': round(avg['avg_score'], 1) if avg['avg_score'] else 0,
-        'count': avg['count'],
-        'ratings': [{
-            'from_user': r['from_user'],
-            'from_username': r['from_username'],
-            'score': r['score'],
-            'comment': r['comment'],
-            'created_at': r['created_at']
-        } for r in ratings]
-    })
 
 
 

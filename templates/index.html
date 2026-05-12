@@ -4,7 +4,7 @@
     <link rel="icon" href="static/imgs/users_api/monetka.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Кристалл-Кликер</title>
+    <title>Кванто-Кликер</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -15,17 +15,17 @@
 
 <body>
 <div class="all" id="gameRoot">
-
+<div class="notification" id="notif"></div>
     <!-- НАВ -->
     <div class="for_nav">
         <nav id="nav_user">
             <div class="user-info">
-                <div style="width: 45px; height: 45px;" class="user-avatar" id="userAvatar"></div>
+                <div style="width: 45px; height: 45px;" class="user-avatar" id="userAvatar_for_div"><img style="border-radius: 50%;" id="userAvatar" src="" alt="#"></div> <!-- Аватар ( получаем из js строка +- 200) -->
                 <div class="user-name" id="userName">Загрузка...</div>
             </div>
             <div class="users_stars_div">
                 <div class="user-stars" id="userStars">0</div>
-                <div class="starsss_img"><i class="fa-solid fa-star"></i></div>
+                <div class="starsss_img"><img style="width:45px; height: 45px;margin-left: 5px;" src="/static/imgs/kvant/kvant.svg" alt="kvant"></div>
             </div>
         </nav>
     </div>
@@ -38,20 +38,20 @@
             <div class="model-content">
                 <div class="stats-row">
                     <div class="stat-block">
-                        <div style="font-size: 15px;" class="stat-label">За 1 клик</div>
+                        <div style="font-size: 15px;" class="stat-label">За <b style="color: blue; font-weight: 700;font-size: 20px;">1</b> клик</div>
                         <div class="stat-value">
                             <div style="width: 30px;" class="imgs"><img src="/static/imgs/users_api/monetka.svg" alt=""></div>
                             <span style="font-size: 17px;" id="user_upgrade">1</span>
                         </div>
                     </div>
                     <div class="stat-block">
-                        <div style="font-size: 15px ;" class="stat-label">Необходимо</div>
-                        <div class="stat-value">
-                            <span style="font-size: 25px;" id="required-for-level">150</span>
+                        <div style="font-size: 15px ; margin-top: 4px;" class="stat-label">Необходимо</div>
+                        <div style="font-size:25px; margin-top: 2px;" class="stat-value">
+                            <span id="required-for-level">150</span><b>🖱️</b>
                         </div>
                     </div>
                     <div class="stat-block">
-                        <div style="font-size: 15px;" class="stat-label">Монет в сек.</div>
+                        <div style="font-size: 15px;" class="stat-label">Монет<b style="color: blue; font-weight: 700;font-size: 20px;">/</b>С</div>
                         <div class="stat-value">
                             <div style="width: 30px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
                             <span style="font-size: 17px;" id="user_upgrade_sek">0</span>
@@ -74,20 +74,21 @@
                 </div>
 
                 <div class="action-buttons">
-                    <div class="action-btn left-btn" id="ads-btn">📹</div>
+                    <div class="action-btn left-btn" id="ads-btn">🎞</div>
+                    <div class="action-btn right-btn" id="ads-btn2">📌</div>
                 </div>
 
                 <div class="bottom-section">
                     <div class="tapalka">
-                        <div id="sticker_container" style="width:180px;height:180px;cursor:pointer;"></div>
+                        <div id="sticker_container" style="width:220px;height:220px;cursor:pointer;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- ===== VIEW 2: УЛУЧШЕНИЯ ===== -->
-        <div id="model_view_2" class="model-view" data-view="2">
-            <div class="model-content">
+        <div id="model_view_2" class="model-view model_view2" data-view="2">
+            <div style="position: relative;" class="model-content">
                 <div class="main-image-container">
                     <div style="width: 45px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
                     <div id="user_content_coin_lol_for_2" class="main-counter2">0</div>
@@ -189,6 +190,7 @@
                         </div>
                     </div>
                 </div>
+                <div style="position: absolute;bottom: -10px; right: 10px; width: 150px;" class="img_for_u"><img onclick=StarsAndNya() src="/static/imgs/for_2_model_view/girl.png" alt="#"></div>
             </div>
         </div>
 
@@ -199,47 +201,12 @@
                     <div style="width: 45px;" class="imgs"><img src="static/imgs/users_api/monetka.svg" alt=""></div>
                     <div id="user_content_coin_lol_for_3" class="main-counter2">0</div>
                 </div>
-                <div class="donate-title"><p>Поддержи проект и получи бонусы</p></div>
-                <div class="donate-column">
-                    <div class="donate-item" id="donate-x2">
-                        <div class="donate-item-left"><span class="donate-emoji">⚡</span>
-                            <div class="donate-info"><span class="donate-name">X2 монет навсегда</span><span class="donate-desc">Удвой доход от всех кликов</span></div>
-                        </div>
-                        <div class="donate-price">
-                            <span class="price-value">15</span><span class="price-currency">⭐</span>
-                            <div class="red_green"></div>
-                        </div>
-                    </div>
-                    <div class="donate-item" id="donate-plus100k">
-                        <div class="donate-item-left"><span class="donate-emoji">💰</span>
-                            <div class="donate-info"><span class="donate-name">+100 000 монет</span><span class="donate-desc">Мгновенное пополнение баланса</span></div>
-                        </div>
-                        <div class="donate-price">
-                            <span class="price-value">20</span><span class="price-currency">⭐</span>
-                            <div class="red_green"></div>
-                        </div>
-                    </div>
-                    <div class="donate-item" id="donate-x2sek">
-                        <div class="donate-item-left"><span class="donate-emoji">⏱️</span>
-                            <div class="donate-info"><span class="donate-name">X2 монет в секунду</span><span class="donate-desc">Удвой пассивный доход</span></div>
-                        </div>
-                        <div class="donate-price">
-                            <span class="price-value">25</span><span class="price-currency">⭐</span>
-                            <div class="red_green"></div>
-                        </div>
-                    </div>
-                    <div class="donate-item" id="donate-superclick">
-                        <div class="donate-item-left"><span class="donate-emoji">👆</span>
-                            <div class="donate-info"><span class="donate-name">Супер-клик навсегда</span><span class="donate-desc">+5 к силе клика</span></div>
-                        </div>
-                        <div class="donate-price">
-                            <span class="price-value">30</span><span class="price-currency">⭐</span>
-                            <div class="red_green"></div>
-                        </div>
-                    </div>
-                </div>
+                <div class="donate-title"><p>Создай проект и получи за него бонусы</p></div>
             </div>
         </div>
+
+
+
 
         <!-- ===== VIEW 4: РЕЙТИНГ ===== -->
         <div id="model_view_4" class="model-view" data-view="4">
@@ -280,8 +247,9 @@
         <!-- ===== VIEW 5: ПРОМОКОДЫ ===== -->
         <div id="model_view_5" class="model-view" data-view="5">
             <div class="model-content">
+                <h2 style="text-align: center; font-size: 24px;font-weight: 700; margin: 10px auto;">КВАНТО-МАРКЕТ</h2>
                 <div class="promos-container">
-                    <div class="promo-card">
+                    <div class="promo-card active-promo">
                         <h2>Промокод на еду:</h2>
                         <div class="promo-content">
                             <div class="promo-info"><button class="promo-buy-btn" data-price="5000000">Купить за 5M</button></div>
@@ -296,6 +264,55 @@
                         </div>
                     </div>
                     <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card">
+                        <h2>Промокод на книги:</h2>
+                        <div class="promo-content">
+                            <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
+                            <div class="promo-image"><img src="static/imgs/for_model5/qmkOKVxBws0JRoBV 1.svg" alt=""></div>
+                        </div>
+                    </div>
+                    <div class="promo-card active-promo">
                         <h2>Промокод на книги:</h2>
                         <div class="promo-content">
                             <div class="promo-info"><button class="promo-buy-btn" data-price="15000000">Купить за 15M</button></div>
@@ -320,7 +337,7 @@
             </a>
             <a href="#" data-view="3">
                 <span class="nav-icon"><img src="static/imgs/for_fyter/money.png" alt=""></span>
-                <h4>Донат</h4>
+                <h4>Проекты</h4>
             </a>
             <a href="#" data-view="4">
                 <span class="nav-icon"><img src="static/imgs/for_fyter/top_lider.png" alt=""></span>
@@ -328,7 +345,7 @@
             </a>
             <a href="#" data-view="5">
                 <span class="nav-icon"><img src="static/imgs/for_fyter/Gift.png" alt=""></span>
-                <h4>Промокоды</h4>
+                <h4>Магазин</h4>
             </a>
         </footer>
     </div>
@@ -352,7 +369,32 @@
         </div>
     </div>
 </div>
-<!-- Добавьте после других скриптов в <head> -->
+
+
+
+
+
+<div id="adOverlay" class="ad-overlay">
+    <div class="ad-modal">
+
+
+
+
+        <button id="adBtn" class="ad-btn">Закрыть</button>
+    </div>
+</div>
+
+
+
+<div id="adOverlay2" class="ad-overlay2">
+    <div class="ad-modal2">
+
+        <button id="adBtn2" class="ad-btn2">Закрыть</button>
+    </div>
+</div>
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="/static/main.js"></script>

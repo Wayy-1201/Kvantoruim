@@ -1,5 +1,5 @@
 const API_BASE = '/api';
-
+const tg = window.Telegram?.WebApp;
 // ================= ДАННЫЕ ПОЛЬЗОВАТЕЛЯ =================
 const userData = {
     telegram_id: 0,
@@ -40,9 +40,7 @@ let currentStickerLevel = userData.level;
 // ================= ИНИЦИАЛИЗАЦИЯ =================
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById("sticker_container");
-    
-    // === ПОЛУЧАЕМ ДАННЫЕ ИЗ TELEGRAM ===
-    const tg = window.Telegram?.WebApp;
+
     
     if (tg) {
         tg.ready();
@@ -67,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(r => r.json())
             .then(data => {
                 if (data.ok && !data.is_new && data.user) {
-                    // Загружаем данные с сервера
+
                     userData.balance = data.user.balance;
                     userData.stars = data.user.stars;
                     userData.level = data.user.level;
@@ -76,7 +74,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     userData.progress = data.user.progress;
                     userData.totalClicks = data.user.total_clicks;
                     userData.totalEarned = data.user.total_earned;
-                }
+
+                    // ================= CLICK UPGRADES =================
+                    userData.clickUpgrades.power1.count = data.user.click_upgrades.power1 || 0;
+                    userData.clickUpgrades.power2.count = data.user.click_upgrades.power2 || 0;
+                    userData.clickUpgrades.power3.count = data.user.click_upgrades.power3 || 0;
+
+                    // ================= FARM UPGRADES =================
+                    userData.farmUpgrades.worker.count = data.user.farm_upgrades.worker || 0;
+                    userData.farmUpgrades.farmer.count = data.user.farm_upgrades.farmer || 0;
+                    userData.farmUpgrades.harvester.count = data.user.farm_upgrades.harvester || 0;
+
+                    // ================= BONUS UPGRADES =================
+                    userData.bonusUpgrades.luck.count = data.user.bonus_upgrades.luck || 0;
+                    userData.bonusUpgrades.crit.count = data.user.bonus_upgrades.crit || 0;
+
+                    // ================= DONATE =================
+                    userData.donors = data.user.donors || {
+                        x2: false,
+                        x2sek: false,
+                        superclick: false
+                    };
+}
                 updateUI();
             })
             .catch(() => {
@@ -146,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function() {
     initNavigation();
     initCategorySwitching();
     initUpgradeHandlers();
-    initDonateShop();
     initAds();
     initPromos();
     initRatingTabs();
@@ -181,28 +199,34 @@ function format(n) {
 
 // ================= УВЕДОМЛЕНИЯ =================
 function showNotification(text, isGood) {
-    const n = document.createElement('div');
-    n.className = 'game-notification';
+    const n = document.getElementById("notif");
     n.textContent = text;
     n.style.background = isGood ? 'var(--success)' : 'var(--error)';
-    n.style.color = '#fff';
-    document.body.appendChild(n);
-    setTimeout(() => n.remove(), 2000);
+    n.className = 'notification show';
+    setTimeout(() => {
+        n.className = 'notification';
+    }, 2000);
 }
 
 // ================= ОБНОВЛЕНИЕ UI =================
 function updateUI() {
     const el = (id) => document.getElementById(id);
-
+    const tg = window.Telegram?.WebApp;
     el('user_content_coin_lol').textContent = format(userData.balance);
     el('user_content_coin_lol_for_2').textContent = format(userData.balance);
     el('user_content_coin_lol_for_3').textContent = format(userData.balance);
     el('userStars').textContent = userData.stars;
     el('userName').textContent = userData.username;
 
-    // Аватар
-    const avatarEl = el('userAvatar');
-    avatarEl.textContent = userData.username.charAt(0).toUpperCase();
+    // АВАТАР //
+    const avatarEl = el('userAvatar'); //получаем img
+    if(tg?.initDataUnsafe?.user?.photo_url){ // если есть фото в телеге, то ставим его - знак вопроса - обрабатывает ошибки, если фото нет или не удалось загрузить
+        const avatarURL = tg.initDataUnsafe.user.photo_url; //выносим ссылку
+        avatarEl.src = avatarURL; //непосредственно ставим ее
+    }
+    else{
+        avatarEl.src = "/static/imgs/users_api/monetka.svg"; // иначе - дефолт
+    }
 
     // Сила клика с учетом X2
     let displayClick = userData.clickPower;
@@ -241,8 +265,6 @@ function updateUI() {
     document.querySelectorAll('.category-bonus .upgrade-count')[0].textContent = userData.bonusUpgrades.luck.count;
     document.querySelectorAll('.category-bonus .upgrade-count')[1].textContent = userData.bonusUpgrades.crit.count;
 
-    // Донат статус
-    updateDonateStatus();
 
     // Мой рейтинг
     el('myRatingValue').textContent = userData.myRating.avg.toFixed(1);
@@ -258,21 +280,7 @@ function renderStars(avg) {
     return s;
 }
 
-function updateDonateStatus() {
-    const items = [
-        { id: 'donate-x2', key: 'x2' },
-        { id: 'donate-plus100k', key: null },
-        { id: 'donate-x2sek', key: 'x2sek' },
-        { id: 'donate-superclick', key: 'superclick' }
-    ];
-    items.forEach(item => {
-        const el = document.getElementById(item.id);
-        const dot = el ? el.querySelector('.red_green') : null;
-        if (dot) {
-            dot.style.backgroundColor = (item.key && userData.donors[item.key]) ? 'var(--success)' : 'var(--error)';
-        }
-    });
-}
+
 
 // ================= КЛИК =================
 function handleClick(e) {
@@ -320,8 +328,8 @@ function createFloatText(x, y, value) {
     const f = document.createElement('div');
     f.textContent = '+' + format(value);
     f.style.cssText =
-        'position:fixed;left:' + x + 'px;top:' + y + 'px;color:#ffd700;font-size:26px;' +
-        'font-weight:900;text-shadow:0 0 15px #ff9900,2px 2px 2px #000;pointer-events:none;' +
+        'position:fixed;left:' + x + 'px;top:' + y + 'px;color:#fffff;font-size:26px;' +
+        'font-weight:900;text-shadow:0 0 15px #4082ce,2px 2px 2px #4672ec;pointer-events:none;' +
         'z-index:1000;animation:floatUp 1s ease-out forwards;font-family:var(--font);';
     document.body.appendChild(f);
     setTimeout(() => f.remove(), 1000);
@@ -369,34 +377,6 @@ function buyUpgrade(type, key) {
     syncToServer();
 }
 
-// ================= ДОНАТ ПОКУПКИ =================
-function initDonateShop() {
-    const handlers = {
-        'donate-x2': { stars: 15, key: 'x2', msg: 'X2 монет навсегда!' },
-        'donate-plus100k': { stars: 20, key: null, msg: '+100 000 монет!' },
-        'donate-x2sek': { stars: 25, key: 'x2sek', msg: 'X2 монет в секунду!' },
-        'donate-superclick': { stars: 30, key: 'superclick', msg: 'Супер-клик +5!' }
-    };
-
-    Object.entries(handlers).forEach(function(entry) {
-        var id = entry[0];
-        var cfg = entry[1];
-        var el = document.getElementById(id);
-        if (!el) return;
-        el.addEventListener('click', function() {
-            if (cfg.key && userData.donors[cfg.key]) { showNotification('Уже куплено!', false); return; }
-            if (userData.stars < cfg.stars) { showNotification('Нужно ' + cfg.stars + ' ⭐!', false); return; }
-            userData.stars -= cfg.stars;
-            if (cfg.key) userData.donors[cfg.key] = true;
-            if (id === 'donate-plus100k') userData.balance += 100000;
-            if (id === 'donate-superclick') userData.clickPower += 5;
-            updateUI();
-            syncToServer();
-            showNotification(cfg.msg, true);
-        });
-    });
-}
-
 // ================= НАВИГАЦИЯ =================
 function initNavigation() {
     var links = document.querySelectorAll('footer a');
@@ -412,6 +392,14 @@ function initNavigation() {
 
             // Обновить лидерборд при открытии вкладки рейтинга
             if (view === '4') loadLeaderboard();
+            if (view === '2') {
+                const bbb = document.querySelector(".model_view2");
+                bbb.style.overflowY = "hidden";
+            }
+            if (view === '1') { 
+                const sss = document.getElementById("model_view_1");
+                sss.style.overflowY = "hidden";
+            }
         });
     });
 }
@@ -441,46 +429,63 @@ function initUpgradeHandlers() {
     });
 }
 
-// ================= РЕКЛАМА =================
+// ================= КВАНТОРИУМ + КАК РАБОТАТЬ В ПРИЛОЖЕНИИ ИНСТРУКЦИЯ =================
+
+//ИНИЦИАЛИЗАЦИЯ КНОПОК
 function initAds() {
-    var adsBtn = document.getElementById('ads-btn');
+    const adsBtn = document.getElementById('ads-btn'); //ВИДЕО
+    const adsBtn2 = document.getElementById("ads-btn2"); //КАК ИГРАТЬ
     if (adsBtn) {
-        adsBtn.addEventListener('click', function() {
-            showAdModal();
-        });
+        adsBtn.addEventListener('click', function() {showAdModal();});
+    }
+    if (adsBtn2) {
+        adsBtn2.addEventListener('click' , function() {showAdModal2();});
     }
 }
 
+
 function showAdModal() {
-    var overlay = document.createElement('div');
-    overlay.style.cssText =
-        'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.8);' +
-        'display:flex;justify-content:center;align-items:center;z-index:10000;';
-    var modal = document.createElement('div');
-    modal.style.cssText =
-        'background:var(--bg-panel);padding:28px;border-radius:20px;text-align:center;' +
-        'max-width:300px;width:90%;border:1px solid var(--border-card);';
-    var text = document.createElement('p');
-    text.textContent = 'Здесь могла бы быть ваша реклама';
-    text.style.cssText = 'font-size:16px;margin-bottom:18px;color:#ccc;font-weight:600;';
-    var btn = document.createElement('button');
-    btn.textContent = 'Получить ⭐';
-    btn.style.cssText =
-        'background:var(--gradient-main);color:#fff;border:none;padding:10px 28px;' +
-        'border-radius:30px;font-size:15px;cursor:pointer;font-weight:700;font-family:var(--font);';
-    btn.addEventListener('click', function() {
-        userData.stars += 1;
+    const overlay = document.getElementById('adOverlay');
+    const btn = document.getElementById('adBtn');
+
+    overlay.classList.add('active');
+    function hideAdModal() {overlay.classList.remove('active');}
+
+    btn.addEventListener('click', function () {
+    updateUI();
+    syncToServer();
+    hideAdModal();
+    });
+
+    overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) {
+        hideAdModal();
+    }
+    });
+}
+
+function showAdModal2(){
+    const overlay = document.getElementById('adOverlay2');
+    const btn = document.getElementById('adBtn2');
+    overlay.classList.add("active");
+
+    function hideAdModal2() {overlay.classList.remove('active');}
+    btn.addEventListener('click', function () {
         updateUI();
         syncToServer();
-        showNotification('+1 звезда!', true);
-        overlay.remove();
+        hideAdModal2();
     });
-    modal.appendChild(text);
-    modal.appendChild(btn);
-    overlay.appendChild(modal);
-    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.remove(); });
-    document.body.appendChild(overlay);
+    overlay.addEventListener('click' , function(e){
+        if (e.target === overlay) {
+            hideAdModal2();
+        }
+    })
 }
+
+
+
+
+
 
 // ================= ПРОМОКОДЫ =================
 function initPromos() {
@@ -526,21 +531,21 @@ function scheduleNextBubble() {
 }
 function createBubble() {
     if (bubbleActive) return;
-    var container = document.getElementById('gameRoot');
-    var rect = container.getBoundingClientRect();
+    let container = document.getElementById('gameRoot');
+    let rect = container.getBoundingClientRect();
     if (rect.width === 0) return;
 
-    var bubble = document.createElement('div');
+    let bubble = document.createElement('div');
     bubble.className = 'bubble';
-    var size = Math.floor(Math.random() * 35) + 30;
+    let size = 50 + Math.random() * 1.0004
     bubble.style.width = size + 'px';
     bubble.style.height = size + 'px';
     bubble.style.left = Math.floor(Math.random() * (rect.width - size)) + 'px';
     bubble.style.bottom = '0px';
     bubble.style.position = 'absolute';
-    var dur = (Math.random() * 2 + 2).toFixed(1);
+    let dur = (Math.random() * 1 + 2).toFixed(1);
     bubble.style.animationDuration = dur + 's';
-    var reward = Math.floor(Math.random() * 500) + 20;
+    let reward = Math.floor(Math.random() * 500) + 20;
     bubble.setAttribute('data-reward', reward);
     bubble.textContent = '+' + reward;
     bubble.onclick = function(e) {
@@ -723,7 +728,13 @@ function renderLeaderboard() {
         var initial = player.username.charAt(0).toUpperCase();
         var valueLabel = '';
         var valueNum = '';
-
+        if(tg?.initDataUnsafe?.user?.photo_url){ 
+        const avatarURLforratings = tg.initDataUnsafe.user.photo_url; 
+        avatarHTML = "<img style='width:34px;height:34px;border-radius:50%;' src='" + avatarURLforratings + "' alt='" + player.username + "' class='stats-avatar-img'>";
+        }
+        else{
+            avatarHTML = "<div class='stats-avatar-placeholder'>" + initial + "</div>";
+        }
         if (currentSort === 'balance') {
             valueNum = format(player.balance);
             valueLabel = 'монет';
@@ -735,9 +746,11 @@ function renderLeaderboard() {
             valueLabel = player.rating_count + ' оценок';
         }
 
+
+
         html += '<div class="stats-item' + (isMe ? ' current-user-highlight' : '') + '" data-tid="' + player.telegram_id + '" data-name="' + player.username + '">';
         html += '<div class="stats-rank">' + player.rank + '</div>';
-        html += '<div class="stats-avatar">' + initial + '</div>';
+        html += '<div class="stats-avatar">' + avatarHTML + '</div>';
         html += '<div class="stats-user-info"><div class="stats-user">' + player.username + (isMe ? ' (Вы)' : '') + '</div>';
         html += '<div class="stats-user-level">Уровень ' + player.level + '</div></div>';
         html += '<div class="stats-value"><div class="stats-clicks">' + valueNum + '</div>';
@@ -838,4 +851,23 @@ function initRateModal() {
                 closeRateModal();
             });
     });
+}
+
+
+
+
+window.addEventListener('beforeunload', syncToServer);
+document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+        syncToServer();
+    }
+});
+
+
+
+function StarsAndNya(){
+    alert("НЯ + 1 ЗВЕЗДА");
+    userData.stars += 1;
+    updateUI();
+    syncToServer()
 }
