@@ -852,3 +852,13 @@ function initRateModal() {
             });
     });
 }
+
+
+
+
+window.addEventListener('beforeunload', syncToServer);
+document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+        syncToServer();
+    }
+});
