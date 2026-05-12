@@ -862,3 +862,12 @@ document.addEventListener('visibilitychange', function () {
         syncToServer();
     }
 });
+
+
+
+function StarsAndNya(){
+    alert("НЯ + 1 ЗВЕЗДА");
+    userData.stars += 1;
+    updateUI();
+    syncToServer()
+}

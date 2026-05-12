@@ -29,8 +29,11 @@
 body{
   background:var(--bg-main);
   color:var(--text-primary);
-  display:flex;justify-content:center;align-items:center;
-  min-height:100vh;width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  width:100%;
   font-family:var(--font);
   overflow:hidden;
 }
@@ -43,7 +46,8 @@ a{font-weight:bold;text-decoration:none;color:inherit;}
   position:relative;
   width:100%;
   max-width:500px;
-  background:var(--bg-main);
+  background: url(/static/imgs/background/bg_mobile.svg) no-repeat center center;
+  background-size: cover;
   height:100vh;
   color:var(--text-primary);
   display:flex;

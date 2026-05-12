@@ -10,15 +10,22 @@ import othersfuncioons as FYNC
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
 
-
 DATABASE = 'crystal_clicker.db'
 LEADERBOARD_LIMIT = 50
-
 DB.init_db()
+
+
+
+
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+
+
 
 
 @app.route('/api/register', methods=['POST'])
@@ -52,6 +59,10 @@ def register():
     user_dict = FYNC.user_to_dict(user)
     user_dict['rating'] = {'avg': 0, 'count': 0}
     return jsonify({'ok': True, 'user': user_dict, 'is_new': True})
+
+
+
+
 
 @app.route('/api/sync', methods=['POST'])
 def sync():
@@ -94,6 +105,9 @@ def sync():
     
     user = db.execute('SELECT * FROM users WHERE telegram_id = ?', (telegram_id,)).fetchone()
     return jsonify({'ok': True, 'user': FYNC.user_to_dict(user)})
+
+
+
 
 
 
@@ -145,6 +159,11 @@ def leaderboard():
         })
     
     return jsonify({'ok': True, 'leaderboard': result, 'total_users': total})
+
+
+
+
+
 
 @app.route('/api/rate', methods=['POST'])
 def rate_user():
