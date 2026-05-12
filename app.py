@@ -12,7 +12,7 @@ CORS(app)
 
 
 DATABASE = 'crystal_clicker.db'
-LEADERBOARD_LIMIT = 15
+LEADERBOARD_LIMIT = 50
 
 DB.init_db()
 

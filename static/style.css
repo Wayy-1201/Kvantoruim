@@ -697,10 +697,46 @@ svg#sticker{
   background:#2a2a3a;
   border-radius:var(--radius-card);
   padding:14px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: ScaleIn linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
 }
 
-.promo-card h2{font-size:16px;margin-bottom:8px;font-weight:800;}
-.promo-content{display:flex;align-items:flex-end;gap:10px;}
+@keyframes ScaleIn{
+    form{
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+.active-promo{
+  opacity: 1;
+  transform: scale(1);
+}
+
+.promo-card h2{
+  font-size:16px;
+  margin-bottom:8px;
+  font-weight:800;
+}
+
+.promo-content{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+}
+
+
+
+
 .promo-info{flex:0 0 60%;padding-bottom:8px;}
 .promo-buy-btn{
   background:#fff;border:none;border-radius:var(--radius-pill);
