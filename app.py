@@ -95,23 +95,7 @@ def sync():
     user = db.execute('SELECT * FROM users WHERE telegram_id = ?', (telegram_id,)).fetchone()
     return jsonify({'ok': True, 'user': FYNC.user_to_dict(user)})
 
-@app.route('/api/user/<int:telegram_id>', methods=['GET'])
-def get_user(telegram_id):
-    if not FYNC.validate_telegram_id(telegram_id):
-        return jsonify({'ok': False, 'error': 'Неверный telegram_id'}), 400
-    db = DB.get_db()
-    user = db.execute('SELECT * FROM users WHERE telegram_id = ?', (telegram_id,)).fetchone()
-    if not user:
-        return jsonify({'ok': False, 'error': 'Пользователь не найден'}), 404
-    rating = db.execute('SELECT AVG(score) as avg_score, COUNT(*) as count FROM ratings WHERE to_user = ?', (telegram_id,)).fetchone()
-    return jsonify({
-        'ok': True,
-        'user': FYNC.user_to_dict(user),
-        'rating': {
-            'avg': round(rating['avg_score'], 1) if rating['avg_score'] else 0,
-            'count': rating['count']
-        }
-    })
+
 
 @app.route('/api/leaderboard', methods=['GET'])
 def leaderboard():
@@ -202,36 +186,6 @@ def rate_user():
         }
     })
 
-@app.route('/api/ratings/<int:telegram_id>', methods=['GET'])
-def get_ratings(telegram_id):
-    if not FYNC.validate_telegram_id(telegram_id):
-        return jsonify({'ok': False, 'error': 'Неверный telegram_id'}), 400
-    limit = min(int(request.args.get('limit', 20)), 50)
-    offset = max(int(request.args.get('offset', 0)), 0)
-    db = DB.get_db()
-    
-    avg = db.execute('SELECT AVG(score) as avg_score, COUNT(*) as count FROM ratings WHERE to_user = ?', (telegram_id,)).fetchone()
-    ratings = db.execute('''
-        SELECT r.from_user, u.username as from_username, r.score, r.comment, r.created_at
-        FROM ratings r
-        JOIN users u ON u.telegram_id = r.from_user
-        WHERE r.to_user = ?
-        ORDER BY r.created_at DESC
-        LIMIT ? OFFSET ?
-    ''', (telegram_id, limit, offset)).fetchall()
-    
-    return jsonify({
-        'ok': True,
-        'avg': round(avg['avg_score'], 1) if avg['avg_score'] else 0,
-        'count': avg['count'],
-        'ratings': [{
-            'from_user': r['from_user'],
-            'from_username': r['from_username'],
-            'score': r['score'],
-            'comment': r['comment'],
-            'created_at': r['created_at']
-        } for r in ratings]
-    })
 
 
 
